@@ -36,6 +36,8 @@ app.controller("toolbarController", function($scope) {
 app.controller("canvasController", function($scope) {
 	$scope.initializeCanvas = function() {
 		canvas = new fabric.Canvas("geheugenModel");
+		canvas.setWidth(window.innerWidth);
+		canvas.setHeight(window.innerHeight);
 		canvas.on({
 			//Making moved / selected object transparent for a nice effect
 			'mouse:down': function(e) {

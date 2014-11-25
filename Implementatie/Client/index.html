@@ -31,7 +31,8 @@
 <div class="container-fluid">
     <div class="row">
         <div class="toolbar" ng-controller="toolbarController">
-            <button type="button" class="well btn btn-primary btn-xs" ng-class="{iconRight: !toggleIcon()}" toggle target="toolbarCollapse"
+            <button type="button" class="well btn btn-primary btn-xs" ng-class="{iconRight: !toggleIcon()}" toggle
+                    target="toolbarCollapse"
                     ng-click="changeToggle()">
                 <i ng-show="toggleIcon()" class="fa fa-chevron-left"></i>
                 <i ng-show="!toggleIcon()" class="fa fa-chevron-right"></i>
@@ -39,7 +40,8 @@
             <div id="toolbarCollapse" toggleable active-class="on" default="active" class="well collapse">
                 <ul>
                     <li>
-                        <button ng-click="addObject()" type="button" class="btn btn-primary toolbarButton" title="Object"><i
+                        <button ng-click="addObject()" type="button" class="btn btn-primary toolbarButton"
+                                title="Object"><i
                                 class="fa fa-calendar-o"></i></button>
                     </li>
                     <li>
@@ -55,9 +57,7 @@
                 </ul>
             </div>
         </div>
-        <div class="well canvas">
-            <canvas id="geheugenModel" ng-controller="canvasController" ng-init="initializeCanvas()" width="1200" height="800"></canvas>
-        </div>
+            <canvas id="geheugenModel" ng-controller="canvasController" ng-init="initializeCanvas()"></canvas>
     </div>
     <div class="row">
 
