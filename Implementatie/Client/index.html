@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="./libraries/css/mobile-angular-ui-desktop.min.css">
     <link rel="stylesheet" href="./css/style.css">
 </head>
-<body ng-controller="MainController">
+<body>
 <noscript class="no-js-overlay">
     Unfortunately, this site requires JavaScript. Please come back with JavaScript enabled / modern browser!
 </noscript>
@@ -30,7 +30,7 @@
 </div>
 <div class="container-fluid">
     <div class="row">
-        <div class="toolbar">
+        <div class="toolbar" ng-controller="toolbarController">
             <button type="button" class="well btn btn-primary btn-xs" ng-class="{iconRight: !toggleIcon()}" toggle target="toolbarCollapse"
                     ng-click="changeToggle()">
                 <i ng-show="toggleIcon()" class="fa fa-chevron-left"></i>
@@ -39,7 +39,7 @@
             <div id="toolbarCollapse" toggleable active-class="on" default="active" class="well collapse">
                 <ul>
                     <li>
-                        <button ng-click="" type="button" class="btn btn-primary toolbarButton" title="Object"><i
+                        <button ng-click="addObject()" type="button" class="btn btn-primary toolbarButton" title="Object"><i
                                 class="fa fa-calendar-o"></i></button>
                     </li>
                     <li>
@@ -55,9 +55,8 @@
                 </ul>
             </div>
         </div>
-        <div class="well">
-            <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-            <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <div class="well canvas">
+            <canvas id="geheugenModel" ng-controller="canvasController" ng-init="initializeCanvas()" width="1200" height="800"></canvas>
         </div>
     </div>
     <div class="row">
@@ -68,6 +67,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.0/angular-route.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.0/angular-touch.min.js"></script>
 <script src="./libraries/js/mobile-angular-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.4.8/fabric.min.js"></script>
 <script src="./js/script.js"></script>
 </body>
 </html>
