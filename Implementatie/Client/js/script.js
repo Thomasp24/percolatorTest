@@ -3,6 +3,22 @@ var app = angular.module("Percolator", ["ngRoute", "ngTouch", "mobile-angular-ui
     objectWidth = 100,
     objectHeight = 100;
 
+function deleteActiveObjectOrGroup() {
+  var selected = canvas.getActiveObject();
+  if (selected !== null) {
+    console.log("e");
+    canvas.remove(selected);
+    canvas.dispose(selected);
+  } else {
+    selected = canvas.getActiveGroup();
+    if (selected !== null) {
+      console.log("g");
+      canvas.remove(selected);
+      canvas.dispose(selected);
+    }
+  }
+}
+
 app.controller("toolbarController", function ($scope) {
     $scope.toolbarToggled = true;
     $scope.changeToggle = function () {
@@ -54,13 +70,17 @@ app.controller("toolbarController", function ($scope) {
         }));
     };
 
+    $scope.deleteObject = function() {
+      deleteActiveObjectOrGroup();
+    };
+
     $scope.exportToPNG = function () {
         var dataURL = canvas.toDataURL('image/png'),
             exportLink = document.getElementById('exportPNG');
 
         exportLink.setAttribute('href', dataURL);
         exportLink.setAttribute('download', 'image.png');
-    }
+    };
 });
 
 app.controller("canvasController", function ($scope) {
@@ -69,10 +89,17 @@ app.controller("canvasController", function ($scope) {
         canvas.setHeight(window.innerHeight);
     }
 
+    function handleKeyDowns(e) {
+      if (e.keyCode === 46) {
+        deleteActiveObjectOrGroup();
+      }
+    }
+
     $scope.initializeCanvas = function() {
 		canvas = new fabric.Canvas("geheugenModel");
 		fullscreenCanvas();
 		window.onresize = fullscreenCanvas;
+    window.onkeydown = handleKeyDowns;
 
 		/*	Zet de echte IText op onzichtbaar en maakt een editable IText aan.
 				Wanneer je stopt met editen van de editable IText vervangt hij de inhoud
@@ -96,8 +123,7 @@ app.controller("canvasController", function ($scope) {
 					hasControls: true,
 					lockMovementY: true,
 					lockMovementX: true,
-					cursorColor: "red",
-					cursorWidth: 2
+					textBackgroundColor: "green"
 				});
 				canvas.add(editIText);
 
@@ -106,25 +132,27 @@ app.controller("canvasController", function ($scope) {
 				editIText.on("editing:exited", function(e) {
 					editing.text = editIText.text;
 					editing.visible = true;
-					canvas.remove(editIText);
+					canvas.fxRemove(editIText);
 					editIText = editing = null;
 				});
 			}
 		}
 
 		var latestClick,
-				editing = editIText = null;
-		/* 	Checkt op double click (minder dan 50 meer dan 500ms), checkt of click
-				plaatsvond in de titel of variabelen, zo ja roept edit() aan */
+        editing = null,
+        editIText = null;
+		/*    Checkt op double click (minder dan 50 meer dan 500ms), checkt of click
+          plaatsvond in de titel of variabelen, zo ja roept edit() aan */
 		canvas.on("mouse:down", function(event) {
 			var now = new Date().getTime();
 			if (now - latestClick < 500 && now - latestClick > 50) {
 				if (typeof event.target === "object") {
 					if (typeof event.target._objects === "object") {
-						if (event.e.clientX > event.target.left && event.e.clientX < event.target.left + objectWidth) {
+						if (event.e.clientX > event.target.left &&
+                event.e.clientX < event.target.left + objectWidth) {
 							if (event.e.clientY < event.target.top + objectHeight/1.33) {
 								edit(event, 2); //Titel editen
-							} else if (event.e.clientY >= event.target.top + objectHeight/1.33 && event.e.clientY) {
+							} else if (event.e.clientY >= event.target.top + objectHeight/1.33) {
 								edit(event, 3); //Variabelen editen
 							}
 						}
