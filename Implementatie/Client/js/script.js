@@ -1,5 +1,7 @@
 var app = angular.module("Percolator", ["ngRoute", "ngTouch", "mobile-angular-ui"]),
-		canvas;
+		canvas,
+		objectWidth = 100,
+		objectHeight = 100;
 
 app.controller("toolbarController", function($scope) {
 	$scope.toolbarToggled = true;
@@ -19,25 +21,50 @@ app.controller("toolbarController", function($scope) {
 	};
 
 	$scope.addObject = function() {
-		canvas.add(
-			new fabric.Rect({
-				width:100,
-				height:100,
-				top:50,
-				left:50,
-				fill: "white",
-				hasControls: false,
-				stroke: "black"
-			})
-		);
+		var object = new fabric.Rect({
+			width: objectWidth,
+			height: objectHeight,
+			fill: "white",
+			stroke: "black"
+		});
+		var title = new fabric.Rect({
+			width: objectWidth/1.5,
+			height: objectHeight/4,
+			top: -objectHeight/4,
+			left: objectWidth/6,
+			fill: "white",
+			stroke: "black"
+		});
+		var titleIText = new fabric.IText("Tap and type", {
+			width: objectWidth/1.5,
+			height: objectHeight/4,
+			top: -objectHeight/4,
+			left: objectWidth/6,
+			fontSize: 12
+		});
+		var objectIText = new fabric.IText("Tap and type", {
+			width: objectWidth,
+			height: objectHeight,
+			fontSize: 12
+		});
+		canvas.add(new fabric.Group([object, title, titleIText, objectIText], {
+			top: 50,
+			left: 75,
+			hasControls: false
+		}));
 	};
 });
 
 app.controller("canvasController", function($scope) {
-	$scope.initializeCanvas = function() {
-		canvas = new fabric.Canvas("geheugenModel");
+	function fullscreenCanvas() {
 		canvas.setWidth(window.innerWidth);
 		canvas.setHeight(window.innerHeight);
+	}
+
+	$scope.initializeCanvas = function() {
+		canvas = new fabric.Canvas("geheugenModel");
+		fullscreenCanvas();
+		window.onresize = fullscreenCanvas;
 		canvas.on({
 			//Making moved / selected object transparent for a nice effect
 			'mouse:down': function(e) {
@@ -59,5 +86,13 @@ app.controller("canvasController", function($scope) {
 				e.target.opacity = 1;
 			}
 		});
+		function log(eventName) {
+	    console.log(eventName);
+  	}
+		function observe(eventName) {
+	    canvas.on(eventName, function(){ log(eventName) });
+  	}
+
+		observe('object:selected');
 	};
 });
