@@ -55,8 +55,8 @@ app.controller("toolbarController", function ($scope) {
     };
 
     $scope.exportToPNG = function () {
-        var dataURL = canvas.toDataURL('image/png');
-        var exportLink = document.getElementById('exportPNG');
+        var dataURL = canvas.toDataURL('image/png'),
+            exportLink = document.getElementById('exportPNG');
 
         exportLink.setAttribute('href', dataURL);
         exportLink.setAttribute('download', 'image.png');
