@@ -120,7 +120,7 @@ app.controller("toolbarController", function ($scope) {
 							object2 = event.target;
 							var points = [firstPoint[0], firstPoint[1], secondPoint[0], secondPoint[1]];
 							var line = new fabric.Line(points, {
-								strokeWidth: 5,
+								strokeWidth: 2,
 								fill: "black",
 								stroke: "black",
 								lockMovementY: true,
