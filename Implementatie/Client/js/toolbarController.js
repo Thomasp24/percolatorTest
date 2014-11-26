@@ -144,6 +144,12 @@ app.controller("toolbarController", function ($scope) {
 		});
 	};
 
+	$scope.newFeature = function () {
+		while(true) {
+			alert ("New feature!!!!");
+		}
+	};
+
     $scope.addSeperateLine = function () {
         var seperateLine = new fabric.Line([ window.innerWidth / 2 - 5, -5, window.innerWidth / 2 - 5, window.innerHeight ], {
             stroke: '#222',
