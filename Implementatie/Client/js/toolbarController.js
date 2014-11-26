@@ -6,6 +6,15 @@ var app = angular.module("Percolator", ["ngRoute", "ngTouch", "mobile-angular-ui
 function deleteActiveObjectOrGroup() {
 	var selected = canvas.getActiveObject();
 	if (selected !== null) {
+		if (selected.hasOwnProperty("firstPoints")) {
+			//Verwijder alle lijnen die aan geheugenmodel object gekoppeld zijn
+			for (var i = 0; i < selected.firstPoints.length; i++) {
+				canvas.fxRemove(selected.firstPoints[i][0]);
+			}
+			for (var i = 0; i < selected.secondPoints.length; i++) {
+				canvas.fxRemove(selected.secondPoints[i][0]);
+			}
+		}
 		canvas.fxRemove(selected);
 	} else {
 		selected = canvas.getActiveGroup();
