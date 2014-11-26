@@ -34,6 +34,7 @@ app.controller("canvasController", function ($scope) {
                 editIText = new fabric.IText(event.target._objects[objectNumber].text, {
                     top: event.target.top + topOffset,
                     left: event.target.left + editing.originalLeft,
+                    fontFamily: 'verdana',
                     fontSize: 12,
                     hasControls: true,
                     lockMovementY: true,

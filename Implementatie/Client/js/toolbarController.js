@@ -1,6 +1,6 @@
 var app = angular.module("Percolator", ["ngRoute", "ngTouch", "mobile-angular-ui"]),
 	canvas,
-	objectWidth = 100,
+	objectWidth = 150,
 	objectHeight = 100;
 
 function deleteActiveObjectOrGroup() {
@@ -41,30 +41,34 @@ app.controller("toolbarController", function ($scope) {
 			rx: 10,
 			ry: 10,
 			fill: "white",
-			stroke: "black",
-			strokeLineJoin: "round"
-		});
-		var title = new fabric.Rect({
-			width: objectWidth / 1.5,
-			height: objectHeight / 4,
-			top: -objectHeight / 4,
-			left: objectWidth / 6,
-			fill: "white",
 			stroke: "black"
 		});
-		var titleIText = new fabric.IText("Tap and type", {
-			width: objectWidth / 1.5,
-			height: objectHeight / 4,
-			top: -objectHeight / 4,
-			left: objectWidth / 6,
-			fontSize: 12
+		var title = new fabric.Rect({
+			width: objectWidth,
+			height: objectHeight/5,
+			fill: "transparent"
 		});
-		var objectIText = new fabric.IText("Tap and type", {
+		var seperator = new fabric.Line([5, (objectHeight/5), objectWidth-5, (objectHeight/5)], {
+			stroke: "black"
+		});
+		var titleIText = new fabric.IText("Title", {
 			width: objectWidth,
 			height: objectHeight,
-			fontSize: 12
+			fontFamily: 'verdana',
+			fontSize: 14,
+			textAlign: 'right',
+			fontWeight: 'bold',
+			left: objectWidth/20
 		});
-		canvas.add(new fabric.Group([object, title, titleIText, objectIText], {
+		var objectIText = new fabric.IText("Variable name", {
+			width: objectWidth,
+			height: objectHeight,
+			top: titleIText.height*1.5,
+			fontFamily: 'verdana',
+			fontSize: 12,
+			left: objectWidth/20
+		});
+		canvas.add(new fabric.Group([object, title, seperator, titleIText, objectIText], {
 			top: 50,
 			left: 75,
 			hasControls: false
