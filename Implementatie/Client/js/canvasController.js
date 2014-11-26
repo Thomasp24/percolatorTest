@@ -62,15 +62,13 @@ app.controller("canvasController", function ($scope) {
         canvas.on("mouse:down", function (event) {
             var now = new Date().getTime();
             if (now - latestClick < 200 && now - latestClick > 50) {
-                if (typeof event.target === "object") {
-                    if (typeof event.target._objects === "object") {
-                        if (event.e.clientX > event.target.left &&
-                            event.e.clientX < event.target.left + objectWidth) {
-                            if (event.e.clientY < event.target.top + objectHeight / 1.33) {
-                                edit(event, 2); //Titel editen
-                            } else if (event.e.clientY >= event.target.top + objectHeight / 1.33) {
-                                edit(event, 3); //Variabelen editen
-                            }
+                if (event.target.hasOwnProperty("firstPoints")) {
+                    if (event.e.clientX > event.target.left &&
+                        event.e.clientX < event.target.left + objectWidth) {
+                        if (event.e.clientY < event.target.top + objectHeight / 1.33) {
+                            edit(event, 2); //Titel editen
+                        } else if (event.e.clientY >= event.target.top + objectHeight / 1.33) {
+                            edit(event, 3); //Variabelen editen
                         }
                     }
                 }
@@ -84,7 +82,7 @@ app.controller("canvasController", function ($scope) {
                 currentLine,
                 movedX,
                 movedY;
-            if (movedObject.hasOwnProperty("_objects")) {
+            if (movedObject.hasOwnProperty("firstPoints")) {
                 for (i = 0; i < movedObject.firstPoints.length; i = i + 1) {
                     currentLine = movedObject.firstPoints[i];
                     movedX = movedObject.left - currentLine[1];
