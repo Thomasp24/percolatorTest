@@ -56,7 +56,7 @@ app.controller("toolbarController", function ($scope) {
 			height: objectHeight/5,
 			fill: "transparent"
 		});
-		var titleIText = new fabric.IText("Title", {
+		var titleText = new fabric.Text("Title", {
 			width: objectWidth,
 			height: objectHeight/5,
 			fontFamily: 'verdana',
@@ -64,10 +64,10 @@ app.controller("toolbarController", function ($scope) {
 			fontWeight: 'bold',
 			left: objectWidth/20
 		});
-		var objectIText = new fabric.IText("Variable name", {
+		var objectText = new fabric.Text("Variable name", {
 			width: objectWidth,
 			height: objectHeight,
-			top: titleIText.height*1.5,
+			top: titleText.height*1.5,
 			fontFamily: 'verdana',
 			fontSize: 12,
 			left: objectWidth/20
@@ -75,7 +75,7 @@ app.controller("toolbarController", function ($scope) {
 		var seperator = new fabric.Line([5, (objectHeight/5), objectWidth-5, (objectHeight/5)], {
 			stroke: "black"
 		});
-		canvas.add(new fabric.Group([object, title, titleIText, objectIText, seperator], {
+		canvas.add(new fabric.Group([object, title, titleText, objectText, seperator], {
 			top: 50,
 			left: 75,
 			hasControls: false,
@@ -143,7 +143,6 @@ app.controller("toolbarController", function ($scope) {
 							object1.firstPoints.push([line, object1.left, object1.top]);
 							object2.secondPoints.push([line, object2.left, object2.top]);
 							canvas.add(line);
-							canvas.off("object:selected");
 							object1 = null;
 							object2 = null;
 							$scope.addingConnections = false;
