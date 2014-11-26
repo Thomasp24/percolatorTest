@@ -47,12 +47,9 @@ app.controller("toolbarController", function ($scope) {
 			height: objectHeight/5,
 			fill: "transparent"
 		});
-		var seperator = new fabric.Line([5, (objectHeight/5), objectWidth-5, (objectHeight/5)], {
-			stroke: "black"
-		});
 		var titleIText = new fabric.IText("Title", {
 			width: objectWidth,
-			height: objectHeight,
+			height: objectHeight/5,
 			fontFamily: 'verdana',
 			fontSize: 14,
 			fontWeight: 'bold',
@@ -66,7 +63,10 @@ app.controller("toolbarController", function ($scope) {
 			fontSize: 12,
 			left: objectWidth/20
 		});
-		canvas.add(new fabric.Group([object, title, seperator, titleIText, objectIText], {
+		var seperator = new fabric.Line([5, (objectHeight/5), objectWidth-5, (objectHeight/5)], {
+			stroke: "black"
+		});
+		canvas.add(new fabric.Group([object, title, titleIText, objectIText, seperator], {
 			top: 50,
 			left: 75,
 			hasControls: false,

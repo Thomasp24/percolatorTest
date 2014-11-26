@@ -35,7 +35,7 @@ app.controller("canvasController", function ($scope) {
                     top: event.target.top + topOffset,
                     left: event.target.left + editing.originalLeft,
                     fontFamily: 'verdana',
-                    fontSize: 12,
+                    fontSize: 14,
                     hasControls: true,
                     lockMovementY: true,
                     lockMovementX: true,
