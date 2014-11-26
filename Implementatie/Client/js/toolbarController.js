@@ -157,25 +157,17 @@ app.controller("toolbarController", function ($scope) {
 	};
 
 	$scope.addText = function () {
-		var object = new fabric.Rect({
-				width: objectWidth,
-				height: objectHeight/3,
-				rx: 10,
-				ry: 10,
-				fill: "white"
-			}),
-			titleIText = new fabric.IText("Stack", {
+		var stackIText = new fabric.IText("Stack", {
 				width: objectWidth,
 				height: objectHeight,
 				fontFamily: 'verdana',
 				fontSize: 16,
-				fontWeight: 'bold'
+				fontWeight: 'bold',
+				top: 50,
+				left: 75,
+				hasControls: false
 			});
-		canvas.add(new fabric.Group([object, titleIText], {
-			top: 50,
-			left: 75,
-			hasControls: false
-		}));
+		canvas.add(stackIText);
 	};
 
 	$scope.exportToPNG = function () {
