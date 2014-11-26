@@ -6,12 +6,12 @@ var app = angular.module("Percolator", ["ngRoute", "ngTouch", "mobile-angular-ui
 function deleteActiveObjectOrGroup() {
 	var selected = canvas.getActiveObject();
     if (selected !== null) {
-        canvas.remove(selected);
+        canvas.fxRemove(selected);
         console.log(selected);
     } else {
         selected = canvas.getActiveGroup();
         if (selected !== null) {
-            canvas.remove(selected);
+            canvas.fxRemove(selected);
             console.log(selected);
         }
     }
