@@ -5,7 +5,6 @@ var app = angular.module("Percolator", ["ngRoute", "ngTouch", "mobile-angular-ui
 
 function deleteActiveObjectOrGroup() {
 	var selected = canvas.getActiveObject();
-    var selected1;
     if (selected !== null) {
         canvas.fxRemove(selected);
     } else {
@@ -153,8 +152,8 @@ app.controller("toolbarController", function ($scope) {
 			rx: 10,
 			ry: 10,
 			fill: "white"
-		});
-		var titleIText = new fabric.IText("Stack", {
+		}),
+			titleIText = new fabric.IText("Stack", {
 			width: objectWidth,
 			height: objectHeight,
 			fontFamily: 'verdana',
