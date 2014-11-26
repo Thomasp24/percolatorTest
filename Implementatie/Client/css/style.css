@@ -54,7 +54,7 @@ body {
     margin: 0;
 }
 
-.toolbar ul > li > button {
+.toolbar ul > li > button, .toolbar a > button {
     width: 40px;
     margin: 2px 0;
 }
