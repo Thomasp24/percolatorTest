@@ -5,15 +5,15 @@ var app = angular.module("Percolator", ["ngRoute", "ngTouch", "mobile-angular-ui
 
 function deleteActiveObjectOrGroup() {
 	var selected = canvas.getActiveObject();
-    if (selected !== null) {
-        canvas.fxRemove(selected);
-    } else {
-        selected = canvas.getActiveGroup();
-        if(selected !== null){
-            canvas.getActiveGroup().forEachObject(function(o){ canvas.fxRemove(o) });
-            canvas.discardActiveGroup().renderAll();
-        }
-    }
+	if (selected !== null) {
+		canvas.fxRemove(selected);
+	} else {
+		selected = canvas.getActiveGroup();
+		if(selected !== null){
+			canvas.getActiveGroup().forEachObject(function(o){ canvas.fxRemove(o) });
+			canvas.discardActiveGroup().renderAll();
+		}
+	}
 }
 
 app.controller("toolbarController", function ($scope) {
@@ -87,7 +87,7 @@ app.controller("toolbarController", function ($scope) {
 	};
 
 	$scope.clearCanvas = function() {
-		canvas.dispose();
+		canvas.clear();
 	};
 
 	$scope.addingConnections = false;
@@ -139,31 +139,31 @@ app.controller("toolbarController", function ($scope) {
 		});
 	};
 
-    $scope.addSeperateLine = function () {
-        var seperateLine = new fabric.Line([ window.innerWidth / 2 - 5, -5, window.innerWidth / 2 - 5, window.innerHeight ], {
-            stroke: '#222',
-            strokeWidth: 10,
-            selectable: true
-        });
-        seperateLine.lockScalingX = seperateLine.lockScalingY = seperateLine.lockRotation = seperateLine.lockMovementY = true;
-        canvas.add(seperateLine);
-    };
+	$scope.addSeperateLine = function () {
+		var seperateLine = new fabric.Line([ window.innerWidth / 2 - 5, -5, window.innerWidth / 2 - 5, window.innerHeight ], {
+			stroke: '#222',
+			strokeWidth: 10,
+			selectable: true
+		});
+		seperateLine.lockScalingX = seperateLine.lockScalingY = seperateLine.lockRotation = seperateLine.lockMovementY = true;
+		canvas.add(seperateLine);
+	};
 
 	$scope.addText = function () {
 		var object = new fabric.Rect({
-			width: objectWidth,
-			height: objectHeight/3,
-			rx: 10,
-			ry: 10,
-			fill: "white"
-		}),
+				width: objectWidth,
+				height: objectHeight/3,
+				rx: 10,
+				ry: 10,
+				fill: "white"
+			}),
 			titleIText = new fabric.IText("Stack", {
-			width: objectWidth,
-			height: objectHeight,
-			fontFamily: 'verdana',
-			fontSize: 16,
-			fontWeight: 'bold'
-		});
+				width: objectWidth,
+				height: objectHeight,
+				fontFamily: 'verdana',
+				fontSize: 16,
+				fontWeight: 'bold'
+			});
 		canvas.add(new fabric.Group([object, titleIText], {
 			top: 50,
 			left: 75,
