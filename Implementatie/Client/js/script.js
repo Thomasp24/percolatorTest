@@ -7,12 +7,10 @@ function deleteActiveObjectOrGroup() {
 	var selected = canvas.getActiveObject();
     if (selected !== null) {
         canvas.fxRemove(selected);
-        console.log(selected);
     } else {
         selected = canvas.getActiveGroup();
         if (selected !== null) {
             canvas.fxRemove(selected);
-            console.log(selected);
         }
     }
 }
@@ -76,14 +74,11 @@ app.controller("toolbarController", function ($scope) {
         var object1 = null;
         var object2 = null;
 
-        console.log('About to make a new connection!!!');
         canvas.on('object:selected', function (event) {
             if (object1 === null) {
                 object1 = event.target;
-                console.log('object1 set!');
             } else {
                 object2 = event.target;
-                console.log('object2 set!');
                 var points = [object1.left, object1.top, object2.left, object2.top];
 
                 line = new fabric.Line(points, {
