@@ -10,7 +10,7 @@ app.controller("canvasController", function ($scope) {
         }
     }
 
-    $scope.initializeCanvas = function() {
+    $scope.initializeCanvas = function () {
         canvas = new fabric.Canvas("geheugenModel");
         fullscreenCanvas();
         window.onresize = fullscreenCanvas;
@@ -45,7 +45,7 @@ app.controller("canvasController", function ($scope) {
 
                 editIText.enterEditing();
 
-                editIText.on("editing:exited", function(e) {
+                editIText.on("editing:exited", function (e) {
                     editing.text = editIText.text;
                     editing.visible = true;
                     canvas.fxRemove(editIText);
@@ -59,16 +59,16 @@ app.controller("canvasController", function ($scope) {
             editIText = null;
         /*    Checkt op double click (minder dan 50 meer dan 500ms), checkt of click
          plaatsvond in de titel of variabelen, zo ja roept edit() aan */
-        canvas.on("mouse:down", function(event) {
+        canvas.on("mouse:down", function (event) {
             var now = new Date().getTime();
             if (now - latestClick < 200 && now - latestClick > 50) {
                 if (typeof event.target === "object") {
                     if (typeof event.target._objects === "object") {
                         if (event.e.clientX > event.target.left &&
                             event.e.clientX < event.target.left + objectWidth) {
-                            if (event.e.clientY < event.target.top + objectHeight/1.33) {
+                            if (event.e.clientY < event.target.top + objectHeight / 1.33) {
                                 edit(event, 2); //Titel editen
-                            } else if (event.e.clientY >= event.target.top + objectHeight/1.33) {
+                            } else if (event.e.clientY >= event.target.top + objectHeight / 1.33) {
                                 edit(event, 3); //Variabelen editen
                             }
                         }
@@ -78,13 +78,17 @@ app.controller("canvasController", function ($scope) {
             latestClick = now;
         });
 
-        canvas.on("object:moving", function(event) {
-            var movedObject = event.target;
+        canvas.on("object:moving", function (event) {
+            var movedObject = event.target,
+                i,
+                currentLine,
+                movedX,
+                movedY;
             if (movedObject.hasOwnProperty("_objects")) {
-                for (var i = 0; i < movedObject.firstPoints.length; i++) {
+                for (i = 0; i < movedObject.firstPoints.length; i = i + 1) {
                     currentLine = movedObject.firstPoints[i];
-                    var movedX = movedObject.left - currentLine[1],
-                        movedY = movedObject.top - currentLine[2];
+                    movedX = movedObject.left - currentLine[1];
+                    movedY = movedObject.top - currentLine[2];
 
                     currentLine[0].set({
                         "x1": currentLine[0].x1 + movedX,
@@ -94,10 +98,10 @@ app.controller("canvasController", function ($scope) {
                     currentLine[2] = movedObject.top;
                 }
 
-                for (var i = 0; i < movedObject.secondPoints.length; i++) {
+                for (i = 0; i < movedObject.secondPoints.length; i = i + 1) {
                     currentLine = movedObject.secondPoints[i];
-                    var movedX = movedObject.left - currentLine[1],
-                        movedY = movedObject.top - currentLine[2];
+                    movedX = movedObject.left - currentLine[1];
+                    movedY = movedObject.top - currentLine[2];
 
                     currentLine[0].set({
                         "x2": currentLine[0].x2 + movedX,

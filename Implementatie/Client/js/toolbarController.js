@@ -143,7 +143,6 @@ app.controller("toolbarController", function ($scope) {
             strokeWidth: 10,
             selectable: true
         });
-        seperateLine.setShadow({ color: 'rgba(0,0,0,0.3)' });
         seperateLine.lockScalingX = seperateLine.lockScalingY = seperateLine.lockRotation = seperateLine.lockMovementY = true;
         canvas.add(seperateLine);
     };
