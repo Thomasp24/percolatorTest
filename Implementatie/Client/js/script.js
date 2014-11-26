@@ -5,18 +5,16 @@ var app = angular.module("Percolator", ["ngRoute", "ngTouch", "mobile-angular-ui
 
 function deleteActiveObjectOrGroup() {
 	var selected = canvas.getActiveObject();
-	if (selected !== null) {
-		console.log("e");
-		canvas.remove(selected);
-		canvas.dispose(selected);
-	} else {
-		selected = canvas.getActiveGroup();
-		if (selected !== null) {
-			console.log("g");
-			canvas.remove(selected);
-			canvas.dispose(selected);
-		}
-	}
+    if (selected !== null) {
+        canvas.remove(selected);
+        console.log(selected);
+    } else {
+        selected = canvas.getActiveGroup();
+        if (selected !== null) {
+            canvas.remove(selected);
+            console.log(selected);
+        }
+    }
 }
 
 app.controller("toolbarController", function ($scope) {
