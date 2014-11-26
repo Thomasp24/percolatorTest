@@ -1,76 +1,78 @@
 var app = angular.module("Percolator", ["ngRoute", "ngTouch", "mobile-angular-ui"]),
-	canvas,
-	objectWidth = 100,
-	objectHeight = 100;
+    canvas,
+    objectWidth = 100,
+    objectHeight = 100;
 
 function deleteActiveObjectOrGroup() {
-	var selected = canvas.getActiveObject();
+    var selected = canvas.getActiveObject();
     var selected1;
     if (selected !== null) {
         canvas.fxRemove(selected);
     } else {
         selected = canvas.getActiveGroup();
-        if(selected !== null){
-            canvas.getActiveGroup().forEachObject(function(o){ canvas.fxRemove(o) });
+        if (selected !== null) {
+            canvas.getActiveGroup().forEachObject(function (o) {
+                canvas.fxRemove(o)
+            });
             canvas.discardActiveGroup().renderAll();
         }
     }
 }
 
 app.controller("toolbarController", function ($scope) {
-	$scope.toolbarToggled = true;
-	$scope.changeToggle = function () {
-		if (!$scope.toolbarToggled) {
-			$scope.toolbarToggled = true;
-		} else {
-			$scope.toolbarToggled = false;
-		}
-	};
-	$scope.toggleIcon = function () {
-		if ($scope.toolbarToggled) {
-			return true;
-		} else {
-			return false;
-		}
-	};
+    $scope.toolbarToggled = true;
+    $scope.changeToggle = function () {
+        if (!$scope.toolbarToggled) {
+            $scope.toolbarToggled = true;
+        } else {
+            $scope.toolbarToggled = false;
+        }
+    };
+    $scope.toggleIcon = function () {
+        if ($scope.toolbarToggled) {
+            return true;
+        } else {
+            return false;
+        }
+    };
 
-	$scope.addObject = function () {
-		var object = new fabric.Rect({
-			width: objectWidth,
-			height: objectHeight,
-			fill: "white",
-			stroke: "black"
-		});
-		var title = new fabric.Rect({
-			width: objectWidth / 1.5,
-			height: objectHeight / 4,
-			top: -objectHeight / 4,
-			left: objectWidth / 6,
-			fill: "white",
-			stroke: "black"
-		});
-		var titleIText = new fabric.IText("Tap and type", {
-			width: objectWidth / 1.5,
-			height: objectHeight / 4,
-			top: -objectHeight / 4,
-			left: objectWidth / 6,
-			fontSize: 12
-		});
-		var objectIText = new fabric.IText("Tap and type", {
-			width: objectWidth,
-			height: objectHeight,
-			fontSize: 12
-		});
-		canvas.add(new fabric.Group([object, title, titleIText, objectIText], {
-			top: 50,
-			left: 75,
-			hasControls: false
-		}));
-	};
+    $scope.addObject = function () {
+        var object = new fabric.Rect({
+            width: objectWidth,
+            height: objectHeight,
+            fill: "white",
+            stroke: "black"
+        });
+        var title = new fabric.Rect({
+            width: objectWidth / 1.5,
+            height: objectHeight / 4,
+            top: -objectHeight / 4,
+            left: objectWidth / 6,
+            fill: "white",
+            stroke: "black"
+        });
+        var titleIText = new fabric.IText("Tap and type", {
+            width: objectWidth / 1.5,
+            height: objectHeight / 4,
+            top: -objectHeight / 4,
+            left: objectWidth / 6,
+            fontSize: 12
+        });
+        var objectIText = new fabric.IText("Tap and type", {
+            width: objectWidth,
+            height: objectHeight,
+            fontSize: 12
+        });
+        canvas.add(new fabric.Group([object, title, titleIText, objectIText], {
+            top: 50,
+            left: 75,
+            hasControls: false
+        }));
+    };
 
-	$scope.deleteObject = function() {
-		deleteActiveObjectOrGroup();
-	};
+    $scope.deleteObject = function () {
+        deleteActiveObjectOrGroup();
+    };
 
     $scope.addConnection = function () {
         var object1 = null;
@@ -92,13 +94,23 @@ app.controller("toolbarController", function ($scope) {
                 canvas.off('object:selected');
             }
         });
-    }
+    };
+    $scope.addSeperateLine = function () {
+        var seperateLine = new fabric.Line([ window.innerWidth / 2 - 5, -5, window.innerWidth / 2 - 5, window.innerHeight ], {
+            stroke: '#222',
+            strokeWidth: 10,
+            selectable: true
+        });
+        seperateLine.setShadow({ color: 'rgba(0,0,0,0.3)' });
+        seperateLine.lockScalingX = seperateLine.lockScalingY = seperateLine.lockRotation = seperateLine.lockMovementY = true;
+        canvas.add(seperateLine);
+    };
 
-	$scope.exportToPNG = function () {
-		var dataURL = canvas.toDataURL('image/png'),
-			exportLink = document.getElementById('exportPNG');
+    $scope.exportToPNG = function () {
+        var dataURL = canvas.toDataURL('image/png'),
+            exportLink = document.getElementById('exportPNG');
 
-		exportLink.setAttribute('href', dataURL);
-		exportLink.setAttribute('download', 'image.png');
-	};
+        exportLink.setAttribute('href', dataURL);
+        exportLink.setAttribute('download', 'image.png');
+    };
 });

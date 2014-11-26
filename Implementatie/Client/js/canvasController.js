@@ -60,7 +60,7 @@ app.controller("canvasController", function ($scope) {
          plaatsvond in de titel of variabelen, zo ja roept edit() aan */
         canvas.on("mouse:down", function(event) {
             var now = new Date().getTime();
-            if (now - latestClick < 500 && now - latestClick > 50) {
+            if (now - latestClick < 200 && now - latestClick > 50) {
                 if (typeof event.target === "object") {
                     if (typeof event.target._objects === "object") {
                         if (event.e.clientX > event.target.left &&
