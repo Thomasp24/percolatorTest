@@ -11,10 +11,8 @@ function deleteActiveObjectOrGroup() {
     } else {
         selected = canvas.getActiveGroup();
         if(selected !== null){
-            canvas.getActiveGroup().forEachObject(function(o){ canvas.remove(o) });
+            canvas.getActiveGroup().forEachObject(function(o){ canvas.fxRemove(o) });
             canvas.discardActiveGroup().renderAll();
-        } else {
-            canvas.fxRemove(canvas.getActiveObject());
         }
     }
 }
