@@ -87,7 +87,9 @@ app.controller("toolbarController", function ($scope) {
 	};
 
 	$scope.clearCanvas = function() {
-		canvas.clear();
+		canvas.setActiveGroup(new fabric.Group(canvas.getObjects())).renderAll();
+		canvas.getActiveGroup().forEachObject(function(o){ canvas.fxRemove(o) });
+		canvas.discardActiveGroup().renderAll();
 	};
 
 	$scope.addingConnections = false;
