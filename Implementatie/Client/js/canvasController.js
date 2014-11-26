@@ -39,11 +39,13 @@ app.controller("canvasController", function ($scope) {
                     hasControls: true,
                     lockMovementY: true,
                     lockMovementX: true,
-                    textBackgroundColor: "green"
+                    textBackgroundColor: "grey"
                 });
                 canvas.add(editIText);
 
                 editIText.enterEditing();
+                editIText.selectAll();
+                editIText.selectionStart = editIText.selectionEnd;
 
                 editIText.on("editing:exited", function (e) {
                     editing.text = editIText.text;
