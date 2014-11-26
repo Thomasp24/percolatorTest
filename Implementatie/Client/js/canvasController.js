@@ -77,5 +77,37 @@ app.controller("canvasController", function ($scope) {
             }
             latestClick = now;
         });
+
+        canvas.on("object:moving", function(event) {
+            var movedObject = event.target;
+            if (movedObject.hasOwnProperty("_objects")) {
+                for (var i = 0; i < movedObject.firstPoints.length; i++) {
+                    currentLine = movedObject.firstPoints[i];
+                    var movedX = movedObject.left - currentLine[1],
+                        movedY = movedObject.top - currentLine[2];
+
+                    currentLine[0].set({
+                        "x1": currentLine[0].x1 + movedX,
+                        "y1": currentLine[0].y1 + movedY
+                    });
+                    currentLine[1] = movedObject.left;
+                    currentLine[2] = movedObject.top;
+                }
+
+                for (var i = 0; i < movedObject.secondPoints.length; i++) {
+                    currentLine = movedObject.secondPoints[i];
+                    var movedX = movedObject.left - currentLine[1],
+                        movedY = movedObject.top - currentLine[2];
+
+                    currentLine[0].set({
+                        "x2": currentLine[0].x2 + movedX,
+                        "y2": currentLine[0].y2 + movedY
+                    });
+                    currentLine[1] = movedObject.left;
+                    currentLine[2] = movedObject.top;
+                }
+                canvas.renderAll();
+            }
+        });
     };
 });
