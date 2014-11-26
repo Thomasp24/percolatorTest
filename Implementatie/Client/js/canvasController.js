@@ -57,7 +57,7 @@ app.controller("canvasController", function ($scope) {
         var latestClick,
             editing = null,
             editIText = null;
-        /*    Checkt op double click (minder dan 50 meer dan 500ms), checkt of click
+        /*    Checkt op double click (minder dan 50 meer dan 200ms), checkt of click
          plaatsvond in de titel of variabelen, zo ja roept edit() aan */
         canvas.on("mouse:down", function (event) {
             var now = new Date().getTime();
