@@ -146,7 +146,6 @@ app.controller("toolbarController", function ($scope) {
             strokeWidth: 10,
             selectable: true
         });
-        seperateLine.setShadow({ color: 'rgba(0,0,0,0.3)' });
         seperateLine.lockScalingX = seperateLine.lockScalingY = seperateLine.lockRotation = seperateLine.lockMovementY = true;
         canvas.add(seperateLine);
     };
@@ -171,13 +170,6 @@ app.controller("toolbarController", function ($scope) {
 			left: 75,
 			hasControls: false
 		}));
-		canvas.selection = true;//enable grouping selection
-		canvas.observe('selection:created', function (e)//disable rotation/scling on selected group
-		{
-			if (e.target.type === 'group') {
-				e.target.hasControls = false;
-			}
-		});
 	};
 
 	$scope.exportToPNG = function () {
