@@ -87,6 +87,10 @@ app.controller("toolbarController", function ($scope) {
 		deleteActiveObjectOrGroup();
 	};
 
+	$scope.clearCanvas = function() {
+		canvas.dispose();
+	};
+
 	$scope.addingConnections = false;
 	$scope.addConnection = function () {
 		$scope.addingConnections = !$scope.addingConnections;
