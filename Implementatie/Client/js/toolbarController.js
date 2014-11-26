@@ -82,6 +82,10 @@ app.controller("toolbarController", function ($scope) {
 		});
 	};
 
+	$scope.canvasToJSON = function () {
+		console.log(canvas.toJSON());
+	}
+
 	$scope.deleteObject = function() {
 		deleteActiveObjectOrGroup();
 	};
