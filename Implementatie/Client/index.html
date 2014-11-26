@@ -41,23 +41,28 @@
                 <ul>
                     <li>
                         <button ng-click="addObject()" type="button" class="btn btn-primary toolbarButton"
-                                title="Object"><i
-                                class="fa fa-calendar-o"></i></button>
+                                title="Object"><i class="fa fa-calendar-o"></i></button>
                     </li>
                     <li>
-                        <button ng-click="addConnection()" type="button" class="btn btn-primary toolbarButton" title="Connect objects">
-                            <i
-                                    class="fa fa-plug"></i></button>
+                        <button ng-click="deleteObject()" type="button" class="btn btn-primary toolbarButton"
+                                title="Delete selected object"><i class="fa fa-trash-o"></i></button>
+                    </li>
+                    <li>
+                        <button ng-click="" type="button" class="btn btn-primary toolbarButton" title="Connect objects">
+                            <i class="fa fa-plug"></i></button>
                     </li>
                     <li>
                         <button ng-click="" type="button" class="btn btn-primary toolbarButton"
-                                title="Seperate heap/stack"><i
-                                class="fa fa-ellipsis-v"></i></button>
+                                title="Seperate heap/stack"><i class="fa fa-ellipsis-v"></i></button>
+                    </li>
+                    <li>
+                        <a id="exportPNG"><button ng-click="exportToPNG()" type="button" class="btn btn-primary toolbarButton"
+                                                  title="Export canvas to image (.png)"><i class="fa fa-picture-o"></i></button></a>
                     </li>
                 </ul>
             </div>
         </div>
-            <canvas id="geheugenModel" ng-controller="canvasController" ng-init="initializeCanvas()"></canvas>
+        <canvas id="geheugenModel" ng-controller="canvasController" ng-init="initializeCanvas()"></canvas>
     </div>
     <div class="row">
 
