@@ -167,13 +167,6 @@ app.controller("toolbarController", function ($scope) {
 			left: 75,
 			hasControls: false
 		}));
-		canvas.selection = true;//enable grouping selection
-		canvas.observe('selection:created', function (e)//disable rotation/scling on selected group
-		{
-			if (e.target.type === 'group') {
-				e.target.hasControls = false;
-			}
-		});
 	};
 
 	$scope.exportToPNG = function () {
