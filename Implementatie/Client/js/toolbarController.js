@@ -56,7 +56,6 @@ app.controller("toolbarController", function ($scope) {
 			height: objectHeight,
 			fontFamily: 'verdana',
 			fontSize: 14,
-			textAlign: 'right',
 			fontWeight: 'bold',
 			left: objectWidth/20
 		});
@@ -146,6 +145,28 @@ app.controller("toolbarController", function ($scope) {
         seperateLine.lockScalingX = seperateLine.lockScalingY = seperateLine.lockRotation = seperateLine.lockMovementY = true;
         canvas.add(seperateLine);
     };
+
+	$scope.addText = function () {
+		var object = new fabric.Rect({
+			width: objectWidth,
+			height: objectHeight/3,
+			rx: 10,
+			ry: 10,
+			fill: "white"
+		});
+		var titleIText = new fabric.IText("Stack", {
+			width: objectWidth,
+			height: objectHeight,
+			fontFamily: 'verdana',
+			fontSize: 16,
+			fontWeight: 'bold'
+		});
+		canvas.add(new fabric.Group([object, titleIText], {
+			top: 50,
+			left: 75,
+			hasControls: false
+		}));
+	};
 
 	$scope.exportToPNG = function () {
 		var dataURL = canvas.toDataURL('image/png'),
