@@ -45,11 +45,17 @@ app.controller("toolbarController", function ($scope) {
 	$scope.addObject = function () {
 		var rect = new joint.shapes.basic.Rect({
             position: { x: 100, y: 30 },
-            size: { width: 100, height: 30 },
-            attrs: { rect: { fill: 'blue' }, text: { text: 'my box', fill: 'white' } }
+            size: { width: 150, height: 100 },
+            attrs: { rect: { fill: 'white' }, text: { text: 'Variables', fill: 'black' } }
         });
 
-        graph.addCell(rect);
+        var rect2 = new joint.shapes.basic.Rect({
+            position: { x: 100, y: 30 },
+            size: { width: 150, height: 25 },
+            attrs: { rect: { fill: 'white' }, text: { text: 'Object', fill: 'black' } }
+        });
+
+        graph.addCells([rect, rect2]);
 	};
 
 	$scope.canvasToJSON = function () {
