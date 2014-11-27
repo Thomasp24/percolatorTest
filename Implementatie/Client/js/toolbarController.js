@@ -170,7 +170,8 @@ $scope.addSeperateLine = function () {
 	var seperateLine = new fabric.Line([ window.innerWidth / 2 - 5, -5, window.innerWidth / 2 - 5, window.innerHeight ], {
 		stroke: '#222',
 		strokeWidth: 10,
-		selectable: true
+		selectable: true,
+		hasControls: false
 	});
 	seperateLine.lockScalingX = seperateLine.lockScalingY = seperateLine.lockRotation = seperateLine.lockMovementY = true;
 	canvas.add(seperateLine);
