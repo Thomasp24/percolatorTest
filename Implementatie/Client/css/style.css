@@ -26,7 +26,7 @@ body {
 .toolbar .well {
     background-color: #d0d0ca;
     border: 1px solid #bdb4b0;
-    padding: 5px;
+    padding: 0;
     border-top-right-radius: 0;
     box-shadow: 1px 1px 3px #aeaeae;
 }
@@ -54,9 +54,31 @@ body {
     margin: 0;
 }
 
+.toolbar ul li {
+    position: relative;
+    padding: 3px 3px 3px 3px;
+}
+
+.toolbar ul li:hover .toolbarExtender, .toolbar ul li .toolbarExtender:hover {
+    display: block;
+}
+
+.toolbar ul li .toolbarExtender {
+    display: none;
+    position: absolute;
+    left: 47px;
+    top: 1px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 5px;
+}
+
+.toolbar ul li .toolbarExtender ul li {
+    float: left;
+}
+
 .toolbar ul > li > button, .toolbar a > button {
     width: 40px;
-    margin: 2px 0;
 }
 
 #toolbarCollapse {
@@ -71,7 +93,7 @@ button[title]:hover:after {
     padding: 0 4px;
     border-radius: 5px;
     font-size: 0.9em;
-    left: 60px;
+    left: 50px;
     opacity: 0.7;
 }
 

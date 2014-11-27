@@ -45,12 +45,12 @@ app.controller("toolbarController", function ($scope) {
 	$scope.addObject = function () {
 		var shadow = {
 			color: 'rgba(0,0,0,0.6)',
-			blur: 10,    
+			blur: 10,
 			offsetX: 5,
 			offsetY: 5,
 			opacity: 0.6,
-			fillShadow: true, 
-			strokeShadow: true 
+			fillShadow: true,
+			strokeShadow: true
 		}
 
 		var object = new fabric.Rect({
