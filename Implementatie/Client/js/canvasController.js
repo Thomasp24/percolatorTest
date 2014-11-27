@@ -35,17 +35,16 @@ app.controller("canvasController", function ($scope) {
                     top: event.target.top + topOffset,
                     left: event.target.left + editing.originalLeft,
                     fontFamily: 'verdana',
-                    fontSize: 14,
+                    fontSize: 12,
                     hasControls: true,
                     lockMovementY: true,
                     lockMovementX: true,
-                    textBackgroundColor: "grey"
+                    textBackgroundColor: "lightgrey"
                 });
                 canvas.add(editIText);
 
                 editIText.enterEditing();
                 editIText.selectAll();
-                editIText.selectionStart = editIText.selectionEnd;
 
                 editIText.on("editing:exited", function (e) {
                     editing.text = editIText.text;
