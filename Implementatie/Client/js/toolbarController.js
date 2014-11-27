@@ -158,6 +158,7 @@ app.controller("toolbarController", function ($scope) {
 							object2 = event.target;
 							var points = [firstPoint[0], firstPoint[1], secondPoint[0], secondPoint[1]];
 							var line = new fabric.Line(points, {
+								strokeDashArray: [5, 5],
 								strokeWidth: 2,
 								fill: "black",
 								stroke: "black",
@@ -195,7 +196,8 @@ $scope.addSeperateLine = function () {
 	var seperateLine = new fabric.Line([ window.innerWidth / 2 - 5, -5, window.innerWidth / 2 - 5, window.innerHeight ], {
 		stroke: '#222',
 		strokeWidth: 10,
-		selectable: true
+		selectable: true,
+		hasControls: false
 	});
 	seperateLine.lockScalingX = seperateLine.lockScalingY = seperateLine.lockRotation = seperateLine.lockMovementY = true;
 	canvas.add(seperateLine);
