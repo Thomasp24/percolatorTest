@@ -39,11 +39,13 @@ app.controller("canvasController", function ($scope) {
                     hasControls: true,
                     lockMovementY: true,
                     lockMovementX: true,
-                    textBackgroundColor: "green"
+                    textBackgroundColor: "grey"
                 });
                 canvas.add(editIText);
 
                 editIText.enterEditing();
+                editIText.selectAll();
+                editIText.selectionStart = editIText.selectionEnd;
 
                 editIText.on("editing:exited", function (e) {
                     editing.text = editIText.text;
@@ -76,39 +78,76 @@ app.controller("canvasController", function ($scope) {
             latestClick = now;
         });
 
+        function moveLinesAlongWithObject(movedObject, positionVar) {
+          console.log(movedObject);
+          var i,
+              currentLine,
+              movedX,
+              movedY,
+              forLoopLimit = parseInt(movedObject.firstPoints.length) +
+                            parseInt(movedObject.secondPoints.length);
+          /*  Één for loop voor first- en secondPoints, berekend verschil tussen
+              vorige positie object en huidige positie en past dit verschil toe
+              op de gekoppelde lijnen */
+          for (i = 0; i < forLoopLimit; i = i + 1) {
+              var firstOrSecond, left, top;
+              if (i < movedObject.firstPoints.length) {
+                firstOrSecond = "first";
+                currentLine = movedObject.firstPoints[i];
+              } else {
+                firstOrSecond = "second";
+                currentLine = movedObject.secondPoints[i-movedObject.firstPoints.length];
+              }
+
+              var x1, x2, y1, y2;
+              if (!positionVar) {
+                left = movedObject.left,
+                top = movedObject.top;
+              } else {
+                left = positionVar[0] + (positionVar[0] - currentLine[1]),
+                top = positionVar[1] + (positionVar[1] - currentLine[2]);
+              }
+
+              x1 = currentLine[0].x1 + (left - currentLine[1]),
+              y1 = currentLine[0].y1 + (top - currentLine[2]);
+              x2 = currentLine[0].x2 + (left - currentLine[1]),
+              y2 = currentLine[0].y2 + (top - currentLine[2]);
+
+              if (firstOrSecond === "first") {
+                currentLine[0].set({
+                  "x1": x1,
+                  "y1": y1
+                });
+              } else {
+                currentLine[0].set({
+                  "x2": x2,
+                  "y2": y2
+                });
+              }
+
+              currentLine[1] = left;
+              currentLine[2] = top;
+          }
+          canvas.renderAll();
+        }
+
+        var latestMove = new Date().getTime();
         canvas.on("object:moving", function (event) {
-            var movedObject = event.target,
-                i,
-                currentLine,
-                movedX,
-                movedY;
-            if (movedObject.hasOwnProperty("firstPoints")) {
-                for (i = 0; i < movedObject.firstPoints.length; i = i + 1) {
-                    currentLine = movedObject.firstPoints[i];
-                    movedX = movedObject.left - currentLine[1];
-                    movedY = movedObject.top - currentLine[2];
-
-                    currentLine[0].set({
-                        "x1": currentLine[0].x1 + movedX,
-                        "y1": currentLine[0].y1 + movedY
-                    });
-                    currentLine[1] = movedObject.left;
-                    currentLine[2] = movedObject.top;
+            var now = new Date().getTime();
+            //45 keer per seconde toestaan om positie te updaten
+            //if (now - latestMove > 41) {
+            if (now - latestMove > 1) {
+              var objectToBeMoved = event.target;
+              if (objectToBeMoved.hasOwnProperty("firstPoints")) {
+                  moveLinesAlongWithObject(objectToBeMoved, false);
+              }
+              for (var i = 0; i < objectToBeMoved._objects.length; i++) {
+                if (objectToBeMoved._objects[i].hasOwnProperty("firstPoints")) {
+                  moveLinesAlongWithObject(objectToBeMoved._objects[i],
+                  [objectToBeMoved.left, objectToBeMoved.top]);
                 }
-
-                for (i = 0; i < movedObject.secondPoints.length; i = i + 1) {
-                    currentLine = movedObject.secondPoints[i];
-                    movedX = movedObject.left - currentLine[1];
-                    movedY = movedObject.top - currentLine[2];
-
-                    currentLine[0].set({
-                        "x2": currentLine[0].x2 + movedX,
-                        "y2": currentLine[0].y2 + movedY
-                    });
-                    currentLine[1] = movedObject.left;
-                    currentLine[2] = movedObject.top;
-                }
-                canvas.renderAll();
+              }
+              latestMove = now;
             }
         });
     };
