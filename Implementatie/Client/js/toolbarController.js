@@ -218,8 +218,7 @@ $scope.addText = function () {
 		fontWeight: 'bold',
 		top: 50,
 		left: 75,
-		hasControls: false,
-		evented: false
+		hasControls: false
 	});
 	canvas.add(stackIText);
 };
