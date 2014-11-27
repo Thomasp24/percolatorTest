@@ -1,7 +1,7 @@
 var app = angular.module("Percolator", ["ngRoute", "ngTouch", "mobile-angular-ui"]),
-	canvas,
-	objectWidth = 150,
-	objectHeight = 100;
+canvas,
+objectWidth = 150,
+objectHeight = 100;
 
 function deleteActiveObjectOrGroup() {
 	var selected = canvas.getActiveObject();
@@ -43,6 +43,16 @@ app.controller("toolbarController", function ($scope) {
 	};
 
 	$scope.addObject = function () {
+		var shadow = {
+			color: 'rgba(0,0,0,0.6)',
+			blur: 10,    
+			offsetX: 5,
+			offsetY: 5,
+			opacity: 0.6,
+			fillShadow: true, 
+			strokeShadow: true 
+		}
+
 		var object = new fabric.Rect({
 			width: objectWidth,
 			height: objectHeight,
@@ -75,6 +85,7 @@ app.controller("toolbarController", function ($scope) {
 		var seperator = new fabric.Line([5, (objectHeight/5), objectWidth-5, (objectHeight/5)], {
 			stroke: "black"
 		});
+		object.setShadow(shadow);
 		canvas.add(new fabric.Group([object, title, titleText, objectText, seperator], {
 			top: 50,
 			left: 75,
@@ -110,9 +121,9 @@ app.controller("toolbarController", function ($scope) {
 	$scope.addConnection = function () {
 		$scope.addingConnections = !$scope.addingConnections;
 		var object1 = null,
-			object2 = null,
-			firstPoint = [],
-			secondPoint = [];
+		object2 = null,
+		firstPoint = [],
+		secondPoint = [];
 
 		canvas.on("mouse:down", function (event) {
 			var now = new Date().getTime();
@@ -152,37 +163,37 @@ app.controller("toolbarController", function ($scope) {
 				latestClick = now;
 			}
 		});
-	};
+};
 
-	$scope.addSeperateLine = function () {
-		var seperateLine = new fabric.Line([ window.innerWidth / 2 - 5, -5, window.innerWidth / 2 - 5, window.innerHeight ], {
-			stroke: '#222',
-			strokeWidth: 10,
-			selectable: true
-		});
-		seperateLine.lockScalingX = seperateLine.lockScalingY = seperateLine.lockRotation = seperateLine.lockMovementY = true;
-		canvas.add(seperateLine);
-	};
+$scope.addSeperateLine = function () {
+	var seperateLine = new fabric.Line([ window.innerWidth / 2 - 5, -5, window.innerWidth / 2 - 5, window.innerHeight ], {
+		stroke: '#222',
+		strokeWidth: 10,
+		selectable: true
+	});
+	seperateLine.lockScalingX = seperateLine.lockScalingY = seperateLine.lockRotation = seperateLine.lockMovementY = true;
+	canvas.add(seperateLine);
+};
 
-	$scope.addText = function () {
-		var stackIText = new fabric.IText("Stack", {
-				width: objectWidth,
-				height: objectHeight,
-				fontFamily: 'verdana',
-				fontSize: 16,
-				fontWeight: 'bold',
-				top: 50,
-				left: 75,
-				hasControls: false
-			});
-		canvas.add(stackIText);
-	};
+$scope.addText = function () {
+	var stackIText = new fabric.IText("Stack", {
+		width: objectWidth,
+		height: objectHeight,
+		fontFamily: 'verdana',
+		fontSize: 16,
+		fontWeight: 'bold',
+		top: 50,
+		left: 75,
+		hasControls: false
+	});
+	canvas.add(stackIText);
+};
 
-	$scope.exportToPNG = function () {
-		var dataURL = canvas.toDataURL('image/png'),
-			exportLink = document.getElementById('exportPNG');
+$scope.exportToPNG = function () {
+	var dataURL = canvas.toDataURL('image/png'),
+	exportLink = document.getElementById('exportPNG');
 
-		exportLink.setAttribute('href', dataURL);
-		exportLink.setAttribute('download', 'image.png');
-	};
+	exportLink.setAttribute('href', dataURL);
+	exportLink.setAttribute('download', 'image.png');
+};
 });
