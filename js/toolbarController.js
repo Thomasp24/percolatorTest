@@ -49,78 +49,7 @@ app.controller("toolbarController", function ($scope) {
             attrs: { rect: { fill: 'blue' }, text: { text: 'my box', fill: 'white' } }
         });
 
-        var rect2 = rect.clone();
-        rect2.translate(300);
-
-        var link = new joint.dia.Link({
-            source: { id: rect.id },
-            target: { id: rect2.id }
-        });
-
-        graph.addCells([rect, rect2, link]);
-		// var shadow = {
-		// 	color: 'rgba(0,0,0,0.6)',
-		// 	blur: 10,    
-		// 	offsetX: 5,
-		// 	offsetY: 5,
-		// 	opacity: 0.6,
-		// 	fillShadow: true, 
-		// 	strokeShadow: true,
-		// 	evented: false
-		// }
-
-		// var object = new fabric.Rect({
-		// 	width: objectWidth,
-		// 	height: objectHeight,
-		// 	rx: 10,
-		// 	ry: 10,
-		// 	fill: "white",
-		// 	stroke: "black",
-		// 	evented: false
-		// });
-		// var title = new fabric.Rect({
-		// 	width: objectWidth,
-		// 	height: objectHeight/5,
-		// 	fill: "transparent",
-		// 	evented: false
-		// });
-		// var titleText = new fabric.Text("Title", {
-		// 	width: objectWidth,
-		// 	height: objectHeight/5,
-		// 	fontFamily: 'verdana',
-		// 	fontSize: 14,
-		// 	fontWeight: 'bold',
-		// 	left: objectWidth/20,
-		// 	evented: false
-		// });
-		// var objectText = new fabric.Text("Variable name", {
-		// 	width: objectWidth,
-		// 	height: objectHeight,
-		// 	top: titleText.height*1.5,
-		// 	fontFamily: 'verdana',
-		// 	fontSize: 12,
-		// 	left: objectWidth/20,
-		// 	evented: false
-		// });
-		// var seperator = new fabric.Line([5, (objectHeight/5), objectWidth-5, (objectHeight/5)], {
-		// 	stroke: "black"
-		// });
-		// object.setShadow(shadow);
-		// canvas.add(new fabric.Group([object, title, titleText, objectText, seperator], {
-		// 	top: 50,
-		// 	left: 75,
-		// 	hasControls: false,
-		// 	padding: 15,
-		// 	firstPoints: [],
-		// 	secondPoints: []
-		// }));
-		// canvas.selection = true;//enable grouping selection
-		// canvas.observe('selection:created', function (e)//disable rotation/scling on selected group
-		// {
-		// 	if (e.target.type === 'group') {
-		// 		e.target.hasControls = false;
-		// 	}
-		// });
+        graph.addCell(rect);
 	};
 
 	$scope.canvasToJSON = function () {
