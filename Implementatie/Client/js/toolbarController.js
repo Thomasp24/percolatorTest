@@ -90,6 +90,7 @@ app.controller("toolbarController", function ($scope) {
 			top: 50,
 			left: 75,
 			hasControls: false,
+			padding: 15,
 			firstPoints: [],
 			secondPoints: []
 		}));
@@ -121,9 +122,10 @@ app.controller("toolbarController", function ($scope) {
 	$scope.addConnection = function () {
 		$scope.addingConnections = !$scope.addingConnections;
 		var object1 = null,
-		object2 = null,
-		firstPoint = [],
-		secondPoint = [];
+			object2 = null,
+			firstPoint = [],
+			secondPoint = [],
+			previewLine = null;
 
 		canvas.on("mouse:down", function (event) {
 			var now = new Date().getTime();
@@ -140,7 +142,19 @@ app.controller("toolbarController", function ($scope) {
 						}
 						if (object1 === null) {
 							object1 = event.target;
+							//Preview lijn maken en tekenen
+							previewLine = new fabric.Line([firstPoint[0], firstPoint[1], firstPoint[0], firstPoint[1]], {
+								strokeWidth: 2,
+								fill: "black",
+								stroke: "black",
+								selectable: false,
+								evented: false,
+								opacity: 0.5
+							});
+							canvas.add(previewLine);
 						} else if (object2 === null && firstPoint.length === 2 && secondPoint.length === 2) {
+							canvas.fxRemove(previewLine);
+							previewLine = null;
 							object2 = event.target;
 							var points = [firstPoint[0], firstPoint[1], secondPoint[0], secondPoint[1]];
 							var line = new fabric.Line(points, {
@@ -162,6 +176,17 @@ app.controller("toolbarController", function ($scope) {
 					}
 				}
 				latestClick = now;
+			}
+		});
+
+		//Preview line trekken naar huidige muispositie
+		canvas.on("mouse:move", function(event) {
+			if (previewLine !== null) {
+				previewLine.set({
+					"x2": event.e.layerX,
+					"y2": event.e.layerY
+				});
+				canvas.renderAll();
 			}
 		});
 };
