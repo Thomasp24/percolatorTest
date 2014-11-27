@@ -150,7 +150,8 @@ app.controller("toolbarController", function ($scope) {
 								stroke: "black",
 								lockMovementY: true,
 								lockMovementX: true,
-								selectable: false
+								selectable: false,
+								evented: false
 							});
 							object1.firstPoints.push([line, object1.left, object1.top]);
 							object2.secondPoints.push([line, object2.left, object2.top]);
