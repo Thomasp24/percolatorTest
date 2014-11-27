@@ -79,7 +79,6 @@ app.controller("canvasController", function ($scope) {
         });
 
         function moveLinesAlongWithObject(movedObject, positionVar) {
-          console.log(movedObject);
           var i,
               currentLine,
               movedX,
@@ -104,8 +103,8 @@ app.controller("canvasController", function ($scope) {
                 left = movedObject.left,
                 top = movedObject.top;
               } else {
-                left = positionVar[0] + (positionVar[0] - currentLine[1]),
-                top = positionVar[1] + (positionVar[1] - currentLine[2]);
+                left = positionVar[0] + movedObject.left,
+                top = positionVar[1] + movedObject.top;
               }
 
               x1 = currentLine[0].x1 + (left - currentLine[1]),
@@ -135,8 +134,7 @@ app.controller("canvasController", function ($scope) {
         canvas.on("object:moving", function (event) {
             var now = new Date().getTime();
             //45 keer per seconde toestaan om positie te updaten
-            //if (now - latestMove > 41) {
-            if (now - latestMove > 1) {
+            if (now - latestMove > 41) {
               var objectToBeMoved = event.target;
               if (objectToBeMoved.hasOwnProperty("firstPoints")) {
                   moveLinesAlongWithObject(objectToBeMoved, false);
