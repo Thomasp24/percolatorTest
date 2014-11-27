@@ -50,7 +50,8 @@ app.controller("toolbarController", function ($scope) {
 			offsetY: 5,
 			opacity: 0.6,
 			fillShadow: true, 
-			strokeShadow: true 
+			strokeShadow: true,
+			evented: false
 		}
 
 		var object = new fabric.Rect({
@@ -59,12 +60,14 @@ app.controller("toolbarController", function ($scope) {
 			rx: 10,
 			ry: 10,
 			fill: "white",
-			stroke: "black"
+			stroke: "black",
+			evented: false
 		});
 		var title = new fabric.Rect({
 			width: objectWidth,
 			height: objectHeight/5,
-			fill: "transparent"
+			fill: "transparent",
+			evented: false
 		});
 		var titleText = new fabric.Text("Title", {
 			width: objectWidth,
@@ -72,7 +75,8 @@ app.controller("toolbarController", function ($scope) {
 			fontFamily: 'verdana',
 			fontSize: 14,
 			fontWeight: 'bold',
-			left: objectWidth/20
+			left: objectWidth/20,
+			evented: false
 		});
 		var objectText = new fabric.Text("Variable name", {
 			width: objectWidth,
@@ -80,7 +84,8 @@ app.controller("toolbarController", function ($scope) {
 			top: titleText.height*1.5,
 			fontFamily: 'verdana',
 			fontSize: 12,
-			left: objectWidth/20
+			left: objectWidth/20,
+			evented: false
 		});
 		var seperator = new fabric.Line([5, (objectHeight/5), objectWidth-5, (objectHeight/5)], {
 			stroke: "black"
@@ -158,7 +163,6 @@ app.controller("toolbarController", function ($scope) {
 							object2 = event.target;
 							var points = [firstPoint[0], firstPoint[1], secondPoint[0], secondPoint[1]];
 							var line = new fabric.Line(points, {
-								strokeDashArray: [5, 5],
 								strokeWidth: 2,
 								fill: "black",
 								stroke: "black",
@@ -196,8 +200,9 @@ $scope.addSeperateLine = function () {
 	var seperateLine = new fabric.Line([ window.innerWidth / 2 - 5, -5, window.innerWidth / 2 - 5, window.innerHeight ], {
 		stroke: '#222',
 		strokeWidth: 10,
-		selectable: true,
-		hasControls: false
+		selectable: false,
+		hasControls: false,
+		evented: false
 	});
 	seperateLine.lockScalingX = seperateLine.lockScalingY = seperateLine.lockRotation = seperateLine.lockMovementY = true;
 	canvas.add(seperateLine);
@@ -212,7 +217,8 @@ $scope.addText = function () {
 		fontWeight: 'bold',
 		top: 50,
 		left: 75,
-		hasControls: false
+		hasControls: false,
+		evented: false
 	});
 	canvas.add(stackIText);
 };
