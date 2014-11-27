@@ -79,55 +79,55 @@ app.controller("canvasController", function ($scope) {
         });
 
         function moveLinesAlongWithObject(movedObject, positionVar) {
-          var i,
-              currentLine,
-              movedX,
-              movedY,
-              forLoopLimit = parseInt(movedObject.firstPoints.length) +
-                            parseInt(movedObject.secondPoints.length);
-          /*  Één for loop voor first- en secondPoints, berekend verschil tussen
-              vorige positie object en huidige positie en past dit verschil toe
-              op de gekoppelde lijnen */
-          for (i = 0; i < forLoopLimit; i = i + 1) {
-              var firstOrSecond, left, top;
-              if (i < movedObject.firstPoints.length) {
-                firstOrSecond = "first";
-                currentLine = movedObject.firstPoints[i];
-              } else {
-                firstOrSecond = "second";
-                currentLine = movedObject.secondPoints[i-movedObject.firstPoints.length];
-              }
+            var i,
+                currentLine,
+                movedX,
+                movedY,
+                forLoopLimit = parseInt(movedObject.firstPoints.length) +
+                    parseInt(movedObject.secondPoints.length);
+            /*  Één for loop voor first- en secondPoints, berekend verschil tussen
+             vorige positie object en huidige positie en past dit verschil toe
+             op de gekoppelde lijnen */
+            for (i = 0; i < forLoopLimit; i = i + 1) {
+                var firstOrSecond, left, top;
+                if (i < movedObject.firstPoints.length) {
+                    firstOrSecond = "first";
+                    currentLine = movedObject.firstPoints[i];
+                } else {
+                    firstOrSecond = "second";
+                    currentLine = movedObject.secondPoints[i-movedObject.firstPoints.length];
+                }
 
-              var x1, x2, y1, y2;
-              if (!positionVar) {
-                left = movedObject.left,
-                top = movedObject.top;
-              } else {
-                left = positionVar[0] + movedObject.left,
-                top = positionVar[1] + movedObject.top;
-              }
+                var x1, x2, y1, y2;
+                if (!positionVar) {
+                    left = movedObject.left,
+                        top = movedObject.top;
+                } else {
+                    left = positionVar[0] + movedObject.left,
+                        top = positionVar[1] + movedObject.top;
+                }
 
-              x1 = currentLine[0].x1 + (left - currentLine[1]),
-              y1 = currentLine[0].y1 + (top - currentLine[2]);
-              x2 = currentLine[0].x2 + (left - currentLine[1]),
-              y2 = currentLine[0].y2 + (top - currentLine[2]);
+                x1 = currentLine[0].x1 + (left - currentLine[1]),
+                    y1 = currentLine[0].y1 + (top - currentLine[2]);
+                x2 = currentLine[0].x2 + (left - currentLine[1]),
+                    y2 = currentLine[0].y2 + (top - currentLine[2]);
 
-              if (firstOrSecond === "first") {
-                currentLine[0].set({
-                  "x1": x1,
-                  "y1": y1
-                });
-              } else {
-                currentLine[0].set({
-                  "x2": x2,
-                  "y2": y2
-                });
-              }
+                if (firstOrSecond === "first") {
+                    currentLine[0].set({
+                        "x1": x1,
+                        "y1": y1
+                    });
+                } else {
+                    currentLine[0].set({
+                        "x2": x2,
+                        "y2": y2
+                    });
+                }
 
-              currentLine[1] = left;
-              currentLine[2] = top;
-          }
-          canvas.renderAll();
+                currentLine[1] = left;
+                currentLine[2] = top;
+            }
+            canvas.renderAll();
         }
 
         var latestMove = new Date().getTime();
@@ -135,17 +135,19 @@ app.controller("canvasController", function ($scope) {
             var now = new Date().getTime();
             //45 keer per seconde toestaan om positie te updaten
             if (now - latestMove > 41) {
-              var objectToBeMoved = event.target;
-              if (objectToBeMoved.hasOwnProperty("firstPoints")) {
-                  moveLinesAlongWithObject(objectToBeMoved, false);
-              }
-              for (var i = 0; i < objectToBeMoved._objects.length; i++) {
-                if (objectToBeMoved._objects[i].hasOwnProperty("firstPoints")) {
-                  moveLinesAlongWithObject(objectToBeMoved._objects[i],
-                  [objectToBeMoved.left, objectToBeMoved.top]);
+                var objectToBeMoved = event.target;
+                if (objectToBeMoved.hasOwnProperty("firstPoints")) {
+                    moveLinesAlongWithObject(objectToBeMoved, false);
                 }
-              }
-              latestMove = now;
+                if (objectToBeMoved.hasOwnProperty("_objects")) {
+                    for (var i = 0; i < objectToBeMoved._objects.length; i++) {
+                        if (objectToBeMoved._objects[i].hasOwnProperty("firstPoints")) {
+                            moveLinesAlongWithObject(objectToBeMoved._objects[i],
+                                [objectToBeMoved.left, objectToBeMoved.top]);
+                        }
+                    }
+                }
+                latestMove = now;
             }
         });
     };
